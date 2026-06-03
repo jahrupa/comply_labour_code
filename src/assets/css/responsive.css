@@ -1,0 +1,162 @@
+/* ===== RESPONSIVE STYLES ===== */
+@media (max-width: 1024px) {
+  .app-container {
+    padding: 0 24px;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  .app-container {
+    padding: 0 18px;
+  }
+
+  /* Nav */
+  .nav-inner {
+    height: 60px;
+    padding: 0 16px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .logo-badge {
+    display: none;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 48px 0 56px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+  .hero-cta {
+    flex-direction: column;
+  }
+
+  /* Sections */
+  .sec-title {
+    font-size: 28px;
+  }
+  .sec-lede {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  /* How grid */
+  .how-grid {
+    grid-template-columns: 1fr;
+  }
+  .how-step {
+    padding: 28px 20px;
+  }
+
+  /* Testimonials */
+  .testi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Pricing */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Dashboard */
+  .dash-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+    display: flex;
+    padding: 12px 0;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    overflow-x: auto;
+  }
+  .sidebar-section {
+    display: flex;
+    padding: 0 8px;
+    margin-bottom: 0;
+  }
+  .sidebar-label {
+    display: none;
+  }
+  .sidebar-item {
+    padding: 8px 14px;
+    white-space: nowrap;
+  }
+  .dash-main {
+    padding: 20px 18px;
+  }
+
+  /* Grid */
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Auth */
+  .auth-box {
+    padding: 28px 20px;
+  }
+
+  /* Modal */
+  .modal {
+    padding: 20px 16px;
+  }
+  .payment-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Upgrade wall */
+  .upgrade-plans {
+    grid-template-columns: 1fr;
+  }
+
+  /* Variant grid */
+  .variant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Steps */
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  /* FAQ */
+  .faq-head {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 30px;
+  }
+  .sec-title {
+    font-size: 24px;
+  }
+  .hero-stats {
+    gap: 20px;
+  }
+  .stat-num {
+    font-size: 22px;
+  }
+}

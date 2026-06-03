@@ -1,0 +1,10 @@
+# https://pnpm.io/settings
+shamefullyHoist: true
+
+onlyBuiltDependencies:
+  - core-js
+  - esbuild
+
+allowBuilds:
+  core-js: set this to true or false
+  esbuild: set this to true or false
