@@ -159,6 +159,12 @@ const adminItems = [
     label: 'Coupon',
     route: '/admin/coupons',
   },
+  {
+    key: 'analytics',
+    icon: '📊',
+    label: 'Analytics',
+    route: '/admin/analytics',
+  },
 ]
 </script>
 
