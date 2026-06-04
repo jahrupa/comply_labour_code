@@ -70,6 +70,11 @@ const routes = [
         name: 'admin-coupons',
         component: () => import('src/pages/admin/AdminCouponsPage.vue'),
       },
+      {
+        path: 'analytics',
+        name: 'admin-coupons-analytics',
+        component: () => import('src/pages/admin/Couponanalyticspage.vue'),
+      },
     ],
   },
   {
