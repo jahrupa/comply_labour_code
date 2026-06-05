@@ -26,11 +26,6 @@
         <span class="sidebar-icon">{{ item.icon }}</span>
         {{ item.label }}
       </div>
-
-      <div class="sidebar-item" @click="auth.logout">
-        <span class="sidebar-icon">🚪</span>
-        Log out
-      </div>
     </div>
     <div>
       <div class="sidebar-section mt-16" v-if="userType === 'admin'">
@@ -47,6 +42,11 @@
           </span>
 
           {{ item.label }}
+        </div>
+
+        <div class="sidebar-item" @click="auth.logout">
+          <span class="sidebar-icon">🚪</span>
+          Log out
         </div>
       </div>
     </div>
