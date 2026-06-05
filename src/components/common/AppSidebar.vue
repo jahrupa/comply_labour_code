@@ -131,9 +131,9 @@ const accountItems = [
 const adminItems = [
   {
     key: 'admin-dashboard',
-    icon: '⚙️',
-    label: 'Admin Dashboard',
-    route: '/admin',
+    icon: '📊',
+    label: 'Dashboard',
+    route: '/admin/dashboard',
   },
   {
     key: 'subscription-plan',

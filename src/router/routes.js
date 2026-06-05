@@ -34,7 +34,7 @@ const routes = [
   },
 
   {
-    path: '/dashboard',
+    path: '/wage-calculator',
     component: () => import('src/layouts/DashboardLayout.vue'),
     meta: { requiresAuth: true },
     children: [
@@ -54,6 +54,11 @@ const routes = [
       {
         path: '',
         redirect: { name: 'admin-plans' },
+      },
+      {
+        path: 'dashboard',
+        name: 'admin-dashboard',
+        component: () => import('src/pages/admin/AdminDashboardPage.vue'),
       },
       {
         path: 'plans',
