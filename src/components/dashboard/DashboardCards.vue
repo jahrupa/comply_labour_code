@@ -10,6 +10,7 @@
 
     <div class="badge-container">
       <div class="badge">⚡ {{ app.trialRemaining }} employee restructures remaining</div>
+      <button class="webinar-btn" @click="showWebinar = true">Register for Webinar</button>
 
       <div v-if="app.activePlan" class="badge">✅ {{ app.activePlan.name }} active</div>
     </div>
@@ -22,15 +23,18 @@
       <p class="progress-text">{{ app.trialUsed }} / {{ app.trialLimit }} credits used</p>
     </div>
   </div>
+  <WebinarRegistration v-model="showWebinar" />
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useAuthStore } from 'src/stores/auth'
 import { useAppStore } from 'src/stores/app'
+import WebinarRegistration from 'src/components/models/WebinarRegistration.vue'
 
 const auth = useAuthStore()
 const app = useAppStore()
+const showWebinar = ref(false)
 
 const pct = computed(() => {
   return app.trialLimit > 0 ? Math.min(100, (app.trialUsed / app.trialLimit) * 100) : 0
@@ -111,5 +115,21 @@ const pct = computed(() => {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.6);
   margin-top: 4px;
+}
+.webinar-btn {
+  background: #ff6b3d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.webinar-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
 </style>
