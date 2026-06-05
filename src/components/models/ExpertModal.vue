@@ -1,53 +1,93 @@
 <template>
-  <div v-if="modelValue" class="modal-overlay" @click.self="close">
-    <div class="modal-card">
-      <button class="close-btn" @click="close">✕</button>
+  <div v-if="modelValue" class="expert-modal-overlay" @click="closeOnBg">
+    <div class="expert-modal" @click.stop>
+      <button class="em-close" @click="emit('update:modelValue', false)">✕</button>
 
-      <template v-if="!submitted">
-        <h2>Book a Consultation</h2>
+      <div style="margin-bottom: 24px">
+        <div class="sec-eyebrow" style="margin-bottom: 10px">Expert Advisory</div>
 
-        <p class="modal-subtitle">Speak with one of our labour law experts.</p>
-
-        <div class="expert-list">
-          <div
-            v-for="expert in experts"
-            :key="expert"
-            class="expert-chip"
-            :class="{ selected: selectedExpert === expert }"
-            @click="selectedExpert = expert"
-          >
-            {{ expert }}
-          </div>
-        </div>
-
-        <input v-model="form.name" class="form-input" placeholder="Your Name" />
-
-        <input v-model="form.email" type="email" class="form-input" placeholder="Work Email" />
-
-        <select v-model="form.topic" class="form-input">
-          <option value="">Choose Topic</option>
-          <option>Wage Code Restructuring</option>
-          <option>Multi-State Compliance Review</option>
-          <option>PE / Investor Due Diligence</option>
-          <option>Labour Inspector Defence</option>
-          <option>Board Advisory Report</option>
-        </select>
-
-        <button class="submit-btn" @click="submit">Request Consultation</button>
-      </template>
-
-      <template v-else>
-        <h2>Request Submitted 🎉</h2>
-
-        <p>Consultation request sent successfully.</p>
-
-        <p>
-          Reference ID:
-          <strong>{{ confirmationId }}</strong>
+        <h3 style="font-size: 26px; margin-bottom: 8px">
+          {{ title }}
+        </h3>
+        <p style="font-size: 14px; color: #6b7280">
+          {{ description }}
         </p>
+      </div>
 
-        <button class="submit-btn" @click="close">Close</button>
-      </template>
+      <div class="expert-experts" style="margin-bottom: 20px">
+        <div
+          v-for="expert in experts"
+          :key="expert.name"
+          class="expert-chip"
+          :class="{ selected: selectedExpert === expert.name }"
+          @click="selectedExpert = expert.name"
+        >
+          <span class="expert-chip-avatar">
+            {{ expert.icon }}
+          </span>
+
+          {{ expert.name }}
+
+          <span class="avail-dot" :style="{ background: expert.statusColor }"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Your name *</label>
+        <input class="form-input" v-model="form.name" type="text" placeholder="Priya Sharma" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Work email *</label>
+        <input class="form-input" v-model="form.email" type="email" placeholder="you@company.com" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone number</label>
+        <input class="form-input" v-model="form.phone" type="tel" placeholder="+91 98000 00000" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Company & employee count</label>
+        <input
+          class="form-input"
+          v-model="form.company"
+          type="text"
+          placeholder="Acme Pvt Ltd · ~250 employees"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What do you need help with? *</label>
+
+        <select class="form-input" v-model="form.topic">
+          <option value="">Choose a topic...</option>
+
+          <option v-for="topic in topics" :key="topic" :value="topic">
+            {{ topic }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Preferred meeting time</label>
+        <select class="form-input" v-model="form.meetingTime">
+          <option v-for="time in meetingTimes" :key="time" :value="time">
+            {{ time }}
+          </option>
+        </select>
+      </div>
+
+      <q-btn
+        label="Request consultation →"
+        class="btn btn-gold btn-block btn-lg"
+        @click="submitExpertModal"
+        style="margin-top: 8px"
+      />
+
+      <p style="text-align: center; font-size: 11px; margin-top: 10px">
+        No commitment required · First consultation complimentary for new clients
+      </p>
     </div>
   </div>
 </template>
@@ -56,102 +96,261 @@
 import { ref } from 'vue'
 
 defineProps({
-  modelValue: Boolean,
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+
+  experts: {
+    type: Array,
+    default: () => [],
+  },
+
+  topics: {
+    type: Array,
+    default: () => [],
+  },
+
+  title: {
+    type: String,
+    default: '',
+  },
+
+  description: {
+    type: String,
+    default: '',
+  },
+
+  meetingTimes: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'submitted'])
-
-const experts = ['Anand Verma', 'Priya Pillai', 'Rohan Desai']
 
 const selectedExpert = ref('Anand Verma')
 
 const form = ref({
   name: '',
   email: '',
+  phone: '',
+  company: '',
   topic: '',
+  meetingTime: 'No preference',
 })
 
-const submitted = ref(false)
-const confirmationId = ref('')
-
-const close = () => {
-  emit('update:modelValue', false)
+const closeOnBg = (e) => {
+  if (e.target.classList.contains('expert-modal-overlay')) {
+    emit('update:modelValue', false)
+  }
 }
 
-const submit = () => {
-  if (!form.value.name || !form.value.email || !form.value.topic) {
-    return
+const submitExpertModal = () => {
+  const payload = {
+    expert: selectedExpert.value,
+    ...form.value,
   }
 
-  confirmationId.value = 'KM-' + Math.floor(Math.random() * 90000 + 10000)
+  console.log(payload)
 
-  submitted.value = true
+  emit('submitted', payload)
 
-  emit('submitted', {
-    ...form.value,
-    expert: selectedExpert.value,
-    id: confirmationId.value,
-  })
+  emit('update:modelValue', false)
 }
 </script>
-
 <style scoped>
-.modal-overlay {
+.expert-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
-}
+  justify-content: center;
 
-.modal-card {
-  width: 100%;
-  max-width: 600px;
-  background: white;
-  border-radius: 16px;
+  backdrop-filter: blur(6px);
   padding: 24px;
+}
+
+.expert-modal {
+  background: #ffffff;
+
+  width: min(100%, 560px);
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  border-radius: 20px;
+  padding: 40px;
+
   position: relative;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
 }
 
-.close-btn {
+.em-close {
   position: absolute;
-  right: 16px;
   top: 16px;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
+  right: 16px;
 
-.expert-list {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+
+  background: #f8f8f8;
+
+  cursor: pointer;
+
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  color: #6b7280;
+
+  transition: all 0.2s;
 }
 
-.expert-chip {
-  padding: 8px 14px;
-  border: 1px solid #ddd;
-  border-radius: 999px;
-  cursor: pointer;
+.em-close:hover {
+  border-color: #c9972f;
+  color: #c9972f;
 }
 
-.expert-chip.selected {
-  background: #e85230;
-  color: white;
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .form-input {
   width: 100%;
-  margin-bottom: 12px;
-  padding: 12px;
+  height: 48px;
+
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+
+  padding: 0 14px;
+  font-size: 14px;
+
+  outline: none;
 }
 
-.submit-btn {
+.form-input:focus {
+  border-color: #c9972f;
+}
+
+.btn-gold {
   width: 100%;
-  padding: 14px;
+  height: 50px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #b8860b;
+  color: white;
+
+  font-weight: 600;
   cursor: pointer;
+}
+
+.btn-gold:hover {
+  opacity: 0.9;
+}
+
+.sec-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  color: #b8860b;
+}
+
+.sec-eyebrow::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: #b8860b;
+}
+
+.expert-experts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.expert-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+
+  background: #fff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.expert-chip:hover {
+  border-color: #c9972f;
+}
+
+.expert-chip.selected {
+  border-color: #c9972f;
+  background: #fffaf0;
+}
+
+.expert-chip-avatar {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+}
+
+.avail-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  margin-left: 2px;
+
+  display: inline-block;
+}
+
+.btn-gold {
+  width: 100%;
+}
+
+.btn-gold :deep(.q-btn__content) {
+  color: #fff;
 }
 </style>

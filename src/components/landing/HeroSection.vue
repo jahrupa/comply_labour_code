@@ -18,7 +18,6 @@
           <div class="hero-ctas">
             <q-btn class="btn-hero-primary" @click="openSignup">
               Run free diagnostic on 3 employees
-
               <svg
                 width="16"
                 height="16"
@@ -79,8 +78,16 @@
         </div>
       </div>
     </div>
-    <ExpertModal v-model="showExpertModal" @submitted="onExpertSubmitted" />
-    <Modal v-model="showWebinarModal" @submitted="onWebinarSubmitted" />
+    <ExpertModal
+      v-model="showExpertModal"
+      :title="expertModalData.title"
+      :description="expertModalData.description"
+      :experts="expertModalData.experts"
+      :topics="expertModalData.topics"
+      :meetingTimes="expertModalData.meetingTimes"
+      @submitted="onExpertSubmitted"
+    />
+    <WebinarRegistration v-model="showWebinarModal" @submitted="onWebinarSubmitted" />
   </section>
 </template>
 
@@ -88,7 +95,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ExpertModal from '../models/ExpertModal.vue'
-import Modal from '../models/Modal.vue'
+import WebinarRegistration from '../models/WebinarRegistration.vue'
 
 const router = useRouter()
 
@@ -99,6 +106,48 @@ const openSignup = () => {
 }
 
 const showExpertModal = ref(false)
+
+const expertModalData = {
+  title: 'Book a Consultation',
+
+  description:
+    'Speak with a Karma Management senior practitioner. Responses within 24 working hours.',
+
+  experts: [
+    {
+      name: 'Anand Verma',
+      icon: '👨‍⚖️',
+      statusColor: '#22c55e',
+    },
+    {
+      name: 'Priya Pillai',
+      icon: '👩‍⚖️',
+      statusColor: '#22c55e',
+    },
+    {
+      name: 'Rohan Desai',
+      icon: '👨‍💼',
+      statusColor: '#fbbf24',
+    },
+  ],
+
+  topics: [
+    'Wage code restructuring (50+ employees)',
+    'Multi-state compliance review',
+    'PE / investor due diligence',
+    'Labour inspector defence',
+    'Board advisory report (signed letterhead)',
+    'Custom training for HR/Legal team',
+    'Other / custom engagement',
+  ],
+
+  meetingTimes: [
+    'Morning (9am – 12pm IST)',
+    'Afternoon (12pm – 4pm IST)',
+    'Evening (4pm – 7pm IST)',
+    'No preference',
+  ],
+}
 
 const openExpertModal = () => {
   showExpertModal.value = true
@@ -125,13 +174,14 @@ const openWebinarModal = () => {
 
 <style scoped>
 .container {
-  max-width: 1400px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
 .hero-left {
-  max-width: 700px;
+  max-width: 760px;
+  width: 100%;
 }
 
 .btn-hero-primary {
@@ -146,6 +196,7 @@ const openWebinarModal = () => {
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
 .btn-hero-primary:hover {
@@ -158,10 +209,12 @@ const openWebinarModal = () => {
   border: 1px solid #d6d6d6;
   background: white;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .trust-divider {
   width: 1px;
+  height: 34px;
   background: #e5e7eb;
 }
 .hero-v2 {
@@ -174,9 +227,8 @@ const openWebinarModal = () => {
 }
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 500px;
-  gap: 60px;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -186,7 +238,7 @@ const openWebinarModal = () => {
 
 .hero h1,
 .hero-v2 h1 {
-  font-size: clamp(44px, 6vw, 76px);
+  font-size: clamp(48px, 5.5vw);
   line-height: 0.96;
   letter-spacing: -0.035em;
   margin-bottom: 24px;
@@ -199,21 +251,25 @@ const openWebinarModal = () => {
 
 .hero-sub {
   font-size: 18px;
-  max-width: 680px;
-  margin-bottom: 36px;
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 34px;
 }
 
 .hero-ctas {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 48px;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  margin-bottom: 42px;
 }
 
 .trust-strip {
   display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 34px;
 }
 
 .trust-item {
@@ -222,6 +278,8 @@ const openWebinarModal = () => {
 }
 
 .trust-num {
+  font-family: 'Fraunces', serif;
+  color: var(--brand);
   font-size: 28px;
   font-weight: 700;
 }
@@ -238,6 +296,15 @@ const openWebinarModal = () => {
 .scene-3d {
   width: 100%;
   height: 100%;
+}
+
+:deep(.btn-hero-primary .q-btn__content) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 @media (max-width: 1024px) {
