@@ -154,6 +154,12 @@ const adminItems = [
     route: '/admin/rules',
   },
   {
+    key: 'rule-groups',
+    icon: '📋',
+    label: 'Rule Groups',
+    route: '/admin/rule-groups',
+  },
+  {
     key: 'coupon',
     icon: '🎁',
     label: 'Coupon',
