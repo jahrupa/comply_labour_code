@@ -4,7 +4,7 @@
     <FeaturesSection />
     <Testimonials />
     <PricingSection />
-    <AboutPage />
+    <!-- <AboutPage /> -->
     <FAQSection />
     <!-- Expert CTA -->
     <section style="padding: 80px 0; background: var(--brand)">
@@ -66,7 +66,7 @@ import FeaturesSection from 'src/components/landing/FeaturesSection.vue'
 import Testimonials from 'src/components/landing/Testimonials.vue'
 import PricingSection from 'src/components/landing/PricingSection.vue'
 import FAQSection from 'src/components/landing/FAQSection.vue'
-import AboutPage from './AboutPage.vue'
+// import AboutPage from './AboutPage.vue'
 </script>
 
 <style scoped></style>
