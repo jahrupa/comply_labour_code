@@ -165,6 +165,12 @@ const adminItems = [
     label: 'Analytics',
     route: '/admin/analytics',
   },
+  {
+    key: 'invoices',
+    icon: '🧾',
+    label: 'Invoices',
+    route: '/admin/invoices',
+  },
 ]
 </script>
 
