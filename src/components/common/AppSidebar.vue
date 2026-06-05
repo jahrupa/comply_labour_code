@@ -147,12 +147,12 @@ const adminItems = [
     label: 'User',
     route: '/admin/users',
   },
-  // {
-  //   key: 'rules',
-  //   icon: '📋',
-  //   label: 'Rules',
-  //   route: '/admin/rules',
-  // },
+  {
+    key: 'rules',
+    icon: '📋',
+    label: 'Rules',
+    route: '/admin/rules',
+  },
   {
     key: 'coupon',
     icon: '🎁',

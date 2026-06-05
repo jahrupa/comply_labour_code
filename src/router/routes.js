@@ -85,6 +85,11 @@ const routes = [
         name: 'admin-invoices',
         component: () => import('src/pages/admin/AdminInvoicesPage.vue'),
       },
+      {
+        path: 'rules',
+        name: 'admin-rules',
+        component: () => import('src/pages/admin/AdminRulesPage.vue'),
+      },
     ],
   },
   {
