@@ -7,7 +7,7 @@
     <AboutPage />
     <FAQSection />
     <!-- Expert CTA -->
-    <section style="padding: 80px 0; background: var(--brand)">
+    <!-- <section style="padding: 80px 0; background: var(--brand)">
       <div class="app-container" style="text-align: center">
         <h2
           style="
@@ -52,7 +52,7 @@
           </a>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 
