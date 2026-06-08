@@ -10,7 +10,7 @@
       </div>
 
       <!-- Navigation Links -->
-      <div class="nav-links">
+      <div class="nav-links" v-if="!auth.isLoggedIn">
         <span class="nav-link" @click="scrollToSection('features')"> How it works </span>
 
         <span class="nav-link" @click="scrollToSection('pricing-section')"> Pricing </span>
