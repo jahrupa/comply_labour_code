@@ -90,6 +90,7 @@ const pct = computed(() => {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
+  color: white;
 }
 
 .progress-wrapper {

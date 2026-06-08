@@ -309,7 +309,13 @@
             <li>Advisory reports</li>
             <li>Priority email support</li>
           </ul>
-          <button class="btn btn-gold btn-block" style="margin-top: 20px">Get Starter →</button>
+          <button
+            class="btn btn-gold btn-block"
+            style="margin-top: 20px"
+            @click.stop="openPayment('starter')"
+          >
+            Get Starter →
+          </button>
         </div>
         <div class="up-card" @click="openPayment('professional')" style="cursor: pointer">
           <div class="up-plan">Professional</div>
@@ -321,7 +327,11 @@
             <li>Signed letterhead deliverable</li>
             <li>PE / board-ready format</li>
           </ul>
-          <button class="btn btn-primary btn-block" style="margin-top: 20px">
+          <button
+            class="btn btn-primary btn-block"
+            style="margin-top: 20px"
+            @click.stop="openPayment('professional')"
+          >
             Get Professional →
           </button>
         </div>
@@ -352,161 +362,29 @@
     </div>
 
     <!-- Payment Modal -->
-    <div class="modal-overlay" v-if="showPayment" @click.self="showPayment = false">
-      <div class="modal">
-        <button class="modal-close" @click="showPayment = false">✕</button>
-
-        <div v-if="payState === 'form'">
-          <h3>Complete Payment</h3>
-          <p style="font-size: 14px; color: var(--ink-mute); margin-bottom: 16px">
-            Secure payment powered by Razorpay (demo)
-          </p>
-          <div class="modal-plan-badge">
-            🔐 {{ PLANS[payingFor]?.name }} — {{ PLANS[payingFor]?.price }}
-          </div>
-
-          <div class="order-summary">
-            <div class="order-row">
-              <span>Plan</span><span>{{ PLANS[payingFor]?.name }}</span>
-            </div>
-            <div class="order-row">
-              <span>Employees included</span><span>{{ PLANS[payingFor]?.empLabel }}</span>
-            </div>
-            <div class="order-row">
-              <span>GST (18%)</span><span>{{ formatAmount(gstAmount) }}</span>
-            </div>
-            <div class="order-row" v-if="appliedCoupon">
-              <span>Coupon discount</span
-              ><span style="color: var(--green)">-{{ formatAmount(discountAmount) }}</span>
-            </div>
-            <div class="order-row total">
-              <span>Total</span><span>{{ formatAmount(totalAmount) }}</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Coupon code</label>
-            <div style="display: flex; gap: 8px">
-              <input
-                class="form-input"
-                type="text"
-                v-model="couponInput"
-                placeholder="Try KARMA50 or FREE100"
-              />
-              <button class="btn btn-ghost btn-sm" @click="applyCoupon">Apply</button>
-            </div>
-            <p v-if="couponMsg" :class="couponMsgClass" style="margin-top: 6px; font-size: 12px">
-              {{ couponMsg }}
-            </p>
-          </div>
-
-          <!-- Card UI -->
-          <div class="card-preview">
-            <div class="card-chip"></div>
-            <div class="card-num-prev">{{ cardNumDisplay }}</div>
-            <div
-              style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8"
-            >
-              <div>
-                <div style="opacity: 0.7; margin-bottom: 2px">CARD HOLDER</div>
-                {{ cardHolder || 'YOUR NAME' }}
-              </div>
-              <div>
-                <div style="opacity: 0.7; margin-bottom: 2px">EXPIRES</div>
-                {{ cardExp || 'MM/YY' }}
-              </div>
-              <div style="font-size: 22px">💳</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Card Number</label>
-            <input
-              class="form-input"
-              type="text"
-              v-model="cardNum"
-              placeholder="4111 1111 1111 1111"
-              maxlength="19"
-              @input="formatCard"
-            />
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
-            <div class="form-group">
-              <label class="form-label">Card Holder Name</label>
-              <input
-                class="form-input"
-                type="text"
-                v-model="cardHolder"
-                placeholder="Priya Sharma"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Expiry</label>
-              <input
-                class="form-input"
-                type="text"
-                v-model="cardExp"
-                placeholder="MM/YY"
-                maxlength="5"
-                @input="formatExpiry"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">UPI ID (optional)</label>
-            <input class="form-input" type="text" v-model="upiId" placeholder="yourname@okicici" />
-          </div>
-
-          <button class="btn btn-accent btn-block btn-lg" @click="processPayment">
-            Pay {{ formatAmount(totalAmount) }} Securely
-          </button>
-          <p style="text-align: center; font-size: 11px; color: var(--ink-faint); margin-top: 12px">
-            🔒 256-bit SSL encrypted · Demo mode — no real charge
-          </p>
-        </div>
-
-        <div v-if="payState === 'processing'" style="text-align: center; padding: 40px 0">
-          <div
-            style="
-              font-size: 48px;
-              margin-bottom: 16px;
-              display: inline-block;
-              animation: spin 1s linear infinite;
-            "
-          >
-            ⚙️
-          </div>
-          <h3>Processing payment…</h3>
-          <p style="color: var(--ink-mute)">Please wait while we verify your payment</p>
-        </div>
-
-        <div v-if="payState === 'success'" style="text-align: center; padding: 20px 0">
-          <span style="font-size: 56px; display: block; margin-bottom: 16px">🎉</span>
-          <h3 style="font-size: 24px; margin-bottom: 8px">Payment Successful!</h3>
-          <p style="color: var(--ink-mute); margin-bottom: 20px">{{ successMsg }}</p>
-          <div
-            style="
-              background: var(--green-bg);
-              border: 1px solid var(--green);
-              border-radius: 10px;
-              padding: 16px;
-              text-align: left;
-              margin-bottom: 24px;
-            "
-          >
-            <p style="font-weight: 700; color: var(--green); font-size: 13px">
-              ✅ Transaction ID: {{ txnId }}
-            </p>
-            <p style="font-size: 12px; color: var(--ink-mute)">
-              A receipt has been sent to your registered email.
-            </p>
-          </div>
-          <button class="btn btn-primary btn-block" @click="closePaymentSuccess">
-            Continue to Dashboard →
-          </button>
-        </div>
-      </div>
-    </div>
+    <UpgradePlaneModal
+      v-if="showPayment"
+      :plan="PLANS[payingFor].name"
+      :base-amount="baseAmount"
+      :gst-amount="gstAmount"
+      :discount-amount="discountAmount"
+      :total-amount="totalAmount"
+      :card-num-display="cardNumDisplay"
+      :coupon-input="couponInput"
+      :coupon-msg="couponMsg"
+      :coupon-msg-class="couponMsgClass"
+      :pay-state="payState"
+      @close="showPayment = false"
+      @apply-coupon="applyCoupon"
+      @process-payment="processPayment"
+      @update:couponInput="couponInput = $event"
+      @update:cardNumber="cardNum = $event"
+      @update:cardHolder="cardHolder = $event"
+      @update:cardExpiry="cardExp = $event"
+      @update:upiId="upiId = $event"
+      @format-card="formatCard"
+      @format-expiry="formatExpiry"
+    />
 
     <!-- Webinar Modal -->
     <div class="modal-overlay" v-if="showWebinar" @click.self="showWebinar = false">
@@ -560,6 +438,7 @@ import { useAppStore } from '../stores/app'
 import DashboardCards from '../components/dashboard/DashboardCards.vue'
 import UploadZone from '../components/dashboard/UploadZone.vue'
 import ResultsTable from '../components/dashboard/ResultsTable.vue'
+import UpgradePlaneModal from 'src/components/models/UpgradePlaneModal.vue'
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
@@ -755,17 +634,25 @@ function openPayment(plan) {
 
 async function processPayment() {
   payState.value = 'processing'
+
   await new Promise((r) => setTimeout(r, 2200))
+
   const p = PLANS[payingFor.value]
+
   txnId.value = authStore.activatePlan(
     payingFor.value,
     p.name,
     p.credits,
     appliedCoupon.value?.label,
   )
+
   successMsg.value = `Your ${p.name} is now active. You can now process ${p.credits} employees.`
+
   payState.value = 'success'
+
   appStore.showNotif(`🎉 Payment successful! ${p.name} is now active.`, 'success')
+
+  closePaymentSuccess()
 }
 
 function closePaymentSuccess() {

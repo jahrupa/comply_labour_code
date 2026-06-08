@@ -90,6 +90,11 @@ const routes = [
         name: 'admin-rules',
         component: () => import('src/pages/admin/AdminRulesPage.vue'),
       },
+      {
+        path: 'rule-groups',
+        name: 'admin-rule-groups',
+        component: () => import('src/pages/admin/AdminRuleGroupsPage.vue'),
+      },
     ],
   },
   {
