@@ -5,7 +5,7 @@
     <Testimonials />
     <AboutKarma />
     <PricingSection />
-    <AboutPage />
+    <!-- <AboutPage /> -->
     <FAQSection />
     <!-- Expert CTA -->
     <!-- <section style="padding: 80px 0; background: var(--brand)">
