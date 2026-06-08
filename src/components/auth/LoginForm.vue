@@ -208,7 +208,7 @@ const doLogin = async () => {
 
   if (ok) {
     app.showNotif('Welcome back! 👋', 'success')
-    router.push('/dashboard')
+    router.push('/wage-calculator')
   } else {
     error.value = 'Invalid credentials. Try demo@complymgmt.ai / Demo@2026'
   }
@@ -242,7 +242,7 @@ const doSignup = async () => {
 
   app.showNotif('Account created! Free trial activated 🎉', 'success')
 
-  router.push('/dashboard')
+  router.push('/wage-calculator')
 }
 </script>
 

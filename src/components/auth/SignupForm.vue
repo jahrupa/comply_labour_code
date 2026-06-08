@@ -71,7 +71,7 @@ async function submit() {
   authStore.signup(form)
   loading.value = false
   appStore.showNotif('🎉 Account created! Free trial activated.', 'success')
-  router.push('/dashboard')
+  router.push('/wage-calculator')
 }
 </script>
 

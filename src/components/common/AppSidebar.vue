@@ -6,7 +6,7 @@
       <div
         v-for="item in items"
         :key="item.key"
-        :class="['sidebar-item', { active: activeTab === item.key }]"
+        :class="['sidebar-item', { active: isActive(item) }]"
         @click="switchTab(item)"
       >
         <span class="sidebar-icon">{{ item.icon }}</span>
@@ -20,16 +20,11 @@
       <div
         v-for="item in accountItems"
         :key="item.key"
-        :class="['sidebar-item', { active: activeTab === item.key }]"
+        :class="['sidebar-item', { active: isActive(item) }]"
         @click="switchTab(item)"
       >
         <span class="sidebar-icon">{{ item.icon }}</span>
         {{ item.label }}
-      </div>
-
-      <div class="sidebar-item" @click="auth.logout">
-        <span class="sidebar-icon">🚪</span>
-        Log out
       </div>
     </div>
     <div>
@@ -39,7 +34,7 @@
         <div
           v-for="item in adminItems"
           :key="item.key"
-          :class="['sidebar-item', { active: activeTab === item.key }]"
+          :class="['sidebar-item', { active: isActive(item) }]"
           @click="switchTab(item)"
         >
           <span class="sidebar-icon">
@@ -47,6 +42,11 @@
           </span>
 
           {{ item.label }}
+        </div>
+
+        <div class="sidebar-item" @click="auth.logout">
+          <span class="sidebar-icon">🚪</span>
+          Log out
         </div>
       </div>
     </div>
@@ -70,15 +70,24 @@
 import { computed } from 'vue'
 import { useAppStore } from 'src/stores/app'
 import { useAuthStore } from 'src/stores/auth'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-defineProps({
+const props = defineProps({
   activeTab: {
     type: String,
     default: 'calculator',
   },
 })
 const router = useRouter()
+const route = useRoute()
+
+const isActive = (item) => {
+  if (item.route) {
+    return route.path === item.route || route.path.startsWith(item.route + '/')
+  }
+
+  return props.activeTab === item.key
+}
 
 const emit = defineEmits(['tab-change'])
 // const userType = computed(() => auth.user?.type)
@@ -87,7 +96,7 @@ const app = useAppStore()
 const auth = useAuthStore()
 
 const switchTab = (item) => {
-  console.log('Clicked:', item)
+  // console.log('Clicked:', item)
 
   if (item.route) {
     router.push(item.route)
@@ -131,9 +140,9 @@ const accountItems = [
 const adminItems = [
   {
     key: 'admin-dashboard',
-    icon: '⚙️',
-    label: 'Admin Dashboard',
-    route: '/admin',
+    icon: '📊',
+    label: 'Dashboard',
+    route: '/admin/dashboard',
   },
   {
     key: 'subscription-plan',
@@ -147,17 +156,35 @@ const adminItems = [
     label: 'User',
     route: '/admin/users',
   },
-  // {
-  //   key: 'rules',
-  //   icon: '📋',
-  //   label: 'Rules',
-  //   route: '/admin/rules',
-  // },
+  {
+    key: 'rules',
+    icon: '📋',
+    label: 'Rules',
+    route: '/admin/rules',
+  },
+  {
+    key: 'rule-groups',
+    icon: '📋',
+    label: 'Rule Groups',
+    route: '/admin/rule-groups',
+  },
   {
     key: 'coupon',
     icon: '🎁',
     label: 'Coupon',
     route: '/admin/coupons',
+  },
+  {
+    key: 'analytics',
+    icon: '📊',
+    label: 'Analytics',
+    route: '/admin/analytics',
+  },
+  {
+    key: 'invoices',
+    icon: '🧾',
+    label: 'Invoices',
+    route: '/admin/invoices',
   },
 ]
 </script>

@@ -80,7 +80,7 @@ const goAuth = (tab = 'signup') => {
 }
 
 const goDash = () => {
-  router.push('/dashboard')
+  router.push('/wage-calculator')
 }
 
 const scrollToSection = (id) => {
