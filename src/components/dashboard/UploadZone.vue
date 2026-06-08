@@ -20,9 +20,15 @@
         @drop.prevent="handleDrop"
         @dragleave="isDragging = false"
       >
-        <div class="upload-icon">📂</div>
-        <h3>Click to upload or drag & drop</h3>
-        <p>CSV or Excel files (.csv, .xlsx, .xls)</p>
+        <div class="upload-icon">📁</div>
+
+        <h3>Click to upload or drag &amp; drop</h3>
+
+        <p>
+          CSV or Excel files (.csv, .xlsx, .xls) · Max
+          {{ authStore.trialLimit - authStore.trialUsed }}
+          employees on free trial
+        </p>
         <input
           ref="fileInputRef"
           type="file"
@@ -203,5 +209,47 @@ function downloadSample() {
 .upload-fileinfo {
   font-size: 12px;
   color: var(--ink-mute);
+}
+
+.upload-zone {
+  margin-top: 16px;
+  border: 1px dashed #d8cfc0;
+  border-radius: 12px;
+  background: #faf9f7;
+  height: 165px;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.upload-zone:hover,
+.upload-zone.drag {
+  background: #f6f3ee;
+  border-color: #c9b28a;
+}
+
+.upload-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.upload-zone h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.upload-zone p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
 }
 </style>
