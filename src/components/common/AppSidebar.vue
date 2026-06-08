@@ -131,9 +131,9 @@ const accountItems = [
 const adminItems = [
   {
     key: 'admin-dashboard',
-    icon: '⚙️',
-    label: 'Admin Dashboard',
-    route: '/admin',
+    icon: '📊',
+    label: 'Dashboard',
+    route: '/admin/dashboard',
   },
   {
     key: 'subscription-plan',
@@ -147,17 +147,29 @@ const adminItems = [
     label: 'User',
     route: '/admin/users',
   },
-  // {
-  //   key: 'rules',
-  //   icon: '📋',
-  //   label: 'Rules',
-  //   route: '/admin/rules',
-  // },
+  {
+    key: 'rules',
+    icon: '📋',
+    label: 'Rules',
+    route: '/admin/rules',
+  },
   {
     key: 'coupon',
     icon: '🎁',
     label: 'Coupon',
     route: '/admin/coupons',
+  },
+  {
+    key: 'analytics',
+    icon: '📊',
+    label: 'Analytics',
+    route: '/admin/analytics',
+  },
+  {
+    key: 'invoices',
+    icon: '🧾',
+    label: 'Invoices',
+    route: '/admin/invoices',
   },
 ]
 </script>

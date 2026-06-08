@@ -3,11 +3,12 @@
     <HeroSection />
     <FeaturesSection />
     <Testimonials />
+    <AboutKarma />
     <PricingSection />
     <!-- <AboutPage /> -->
     <FAQSection />
     <!-- Expert CTA -->
-    <section style="padding: 80px 0; background: var(--brand)">
+    <!-- <section style="padding: 80px 0; background: var(--brand)">
       <div class="app-container" style="text-align: center">
         <h2
           style="
@@ -52,7 +53,7 @@
           </a>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -66,7 +67,8 @@ import FeaturesSection from 'src/components/landing/FeaturesSection.vue'
 import Testimonials from 'src/components/landing/Testimonials.vue'
 import PricingSection from 'src/components/landing/PricingSection.vue'
 import FAQSection from 'src/components/landing/FAQSection.vue'
-// import AboutPage from './AboutPage.vue'
+import AboutPage from './AboutPage.vue'
+import AboutKarma from 'src/components/landing/AboutKarma.vue'
 </script>
 
 <style scoped></style>

@@ -34,7 +34,7 @@ const routes = [
   },
 
   {
-    path: '/dashboard',
+    path: '/wage-calculator',
     component: () => import('src/layouts/DashboardLayout.vue'),
     meta: { requiresAuth: true },
     children: [
@@ -56,6 +56,11 @@ const routes = [
         redirect: { name: 'admin-plans' },
       },
       {
+        path: 'dashboard',
+        name: 'admin-dashboard',
+        component: () => import('src/pages/admin/AdminDashboardPage.vue'),
+      },
+      {
         path: 'plans',
         name: 'admin-plans',
         component: () => import('src/pages/admin/SubscriptionPlansPage.vue'),
@@ -69,6 +74,21 @@ const routes = [
         path: 'coupons',
         name: 'admin-coupons',
         component: () => import('src/pages/admin/AdminCouponsPage.vue'),
+      },
+      {
+        path: 'analytics',
+        name: 'admin-coupons-analytics',
+        component: () => import('src/pages/admin/Couponanalyticspage.vue'),
+      },
+      {
+        path: 'invoices',
+        name: 'admin-invoices',
+        component: () => import('src/pages/admin/AdminInvoicesPage.vue'),
+      },
+      {
+        path: 'rules',
+        name: 'admin-rules',
+        component: () => import('src/pages/admin/AdminRulesPage.vue'),
       },
     ],
   },

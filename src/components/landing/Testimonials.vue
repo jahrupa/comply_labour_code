@@ -11,8 +11,6 @@
           :key="testimonial.name"
           :class="['testimonial-card', { featured: testimonial.featured }]"
         >
-          <div class="quote-mark">"</div>
-
           <div class="stars">
             {{ '⭐'.repeat(testimonial.stars) }}
           </div>
@@ -65,11 +63,35 @@ const testimonials = [
     featured: true,
   },
   {
-    text: 'As an HR consultant managing 12 clients, the bulk upload feature saves me days every quarter. The statutory citations in the advisory report make client presentations much easier.',
+    text: `As an HR consultant managing 12 clients, the bulk upload feature saves me days every quarter. The statutory citations in the advisory report make client presentations much easier.`,
     name: 'Priyanka Desai',
     role: 'Independent HR Consultant · Pune',
     initials: 'PD',
     avatarBg: 'var(--green)',
+    stars: 5,
+  },
+  {
+    text: `The OSH Code earned leave provisions are genuinely confusing — the tool's distinction between the 180-day OSH provision and the 240-day gratuity qualifying period saved us from a serious error.`,
+    name: 'Pooja Mehta',
+    role: 'Labour Law Counsel, Desai & Associates · Pune',
+    initials: 'PM',
+    avatarBg: 'var(--gold)',
+    stars: 5,
+  },
+  {
+    text: `We were about to restructure salaries based on incorrect state notifications. Karma's live code library caught the discrepancy — our state had a different effective date than the central notification.`,
+    name: 'Sunita Joshi',
+    role: 'Finance Controller, Apex Textiles · Ahmedabad',
+    initials: 'SJ',
+    avatarBg: 'var(--accent)',
+    stars: 5,
+  },
+  {
+    text: `The expert consultation add-on was worth every rupee. We got a Karma-signed letterhead report that we used directly in our due diligence disclosure to a PE investor. Closed a Series B because of it.`,
+    name: 'Rahul Banerjee',
+    role: 'Co-founder & CEO, GreenMile Logistics · Delhi',
+    initials: 'RB',
+    avatarBg: '#7c3aed',
     stars: 5,
   },
 ]
@@ -85,57 +107,50 @@ const testimonials = [
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 56px;
+  margin-top: 48px;
 }
 
 .testimonial-card {
   position: relative;
   background: var(--bg-card);
   border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 32px 28px;
+  border-radius: 24px;
+  padding: 32px;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+
+  min-height: 320px;
+
   transition: all 0.3s ease;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 .testimonial-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--sh-lg);
+  transform: translateY(-14px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 .testimonial-card.featured {
   background: var(--brand);
   border-color: var(--brand);
-}
 
-.quote-mark {
-  position: absolute;
-  top: 20px;
-  right: 28px;
-  font-family: 'Fraunces', serif;
-  font-size: 80px;
-  line-height: 1;
-  color: var(--rule);
-}
-
-.featured .quote-mark {
-  color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-10px);
 }
 
 .stars {
   font-size: 14px;
-  display: flex;
-  gap: 3px;
+  letter-spacing: 2px;
 }
 
 .testimonial-text {
   font-size: 15px;
-  line-height: 1.7;
-  font-style: italic;
-  flex: 1;
+  line-height: 1.75;
   color: var(--ink-soft);
+
+  margin: 16px 0 24px;
+
+  flex-grow: 1;
 }
 
 .featured .testimonial-text {
@@ -149,8 +164,8 @@ const testimonials = [
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -180,6 +195,9 @@ const testimonials = [
 
 .featured .author-role {
   color: rgba(255, 255, 255, 0.7);
+}
+.featured .avatar {
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 @media (max-width: 1024px) {
