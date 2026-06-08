@@ -186,6 +186,18 @@ const adminItems = [
     label: 'Invoices',
     route: '/admin/invoices',
   },
+  {
+    key: 'salary',
+    icon: '💼',
+    label: 'Salary Restructuring',
+    route: '/admin/salary-restructuring',
+  },
+  {
+    key: 'state',
+    icon: '📍',
+    label: 'State',
+    route: '/admin/state',
+  },
 ]
 </script>
 

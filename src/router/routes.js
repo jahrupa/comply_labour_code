@@ -95,6 +95,16 @@ const routes = [
         name: 'admin-rule-groups',
         component: () => import('src/pages/admin/AdminRuleGroupsPage.vue'),
       },
+      {
+        path: 'salary-restructuring',
+        name: 'admin-salary-restructuring',
+        component: () => import('src/pages/admin/SalaryRestructuringPage.vue'),
+      },
+      {
+        path: 'state',
+        name: 'admin-state',
+        component: () => import('src/pages/admin/StatePage.vue'),
+      },
     ],
   },
   {
