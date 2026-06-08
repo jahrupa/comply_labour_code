@@ -3,6 +3,7 @@
     <HeroSection />
     <FeaturesSection />
     <Testimonials />
+    <AboutKarma />
     <PricingSection />
     <AboutPage />
     <FAQSection />
@@ -67,6 +68,7 @@ import Testimonials from 'src/components/landing/Testimonials.vue'
 import PricingSection from 'src/components/landing/PricingSection.vue'
 import FAQSection from 'src/components/landing/FAQSection.vue'
 import AboutPage from './AboutPage.vue'
+import AboutKarma from 'src/components/landing/AboutKarma.vue'
 </script>
 
 <style scoped></style>
