@@ -197,34 +197,115 @@
 
     <!-- Tutorial Tab -->
     <div v-show="activeTab === 'tutorial'" id="tab-tutorial">
-      <div class="card" style="text-align: center; padding: 60px">
-        <div style="font-size: 64px; margin-bottom: 20px">🎬</div>
-        <h3 style="font-size: 24px; margin-bottom: 12px">Video Tutorial</h3>
-        <p style="color: var(--ink-mute); max-width: 500px; margin: 0 auto 28px">
-          Watch our step-by-step walkthrough of the compliance engine — from CSV upload to advisory
-          report download.
-        </p>
-        <div
-          style="
-            background: var(--bg-soft);
-            border: 1px solid var(--rule);
-            border-radius: 12px;
-            padding: 40px;
-            max-width: 640px;
-            margin: 0 auto;
-          "
-        >
-          <div style="font-size: 48px; margin-bottom: 12px">▶️</div>
-          <p style="color: var(--ink-mute); font-size: 14px">
-            Video coming soon. Register for our live webinar instead!
-          </p>
-          <button
-            class="btn btn-accent btn-sm"
-            style="margin-top: 16px"
-            @click="showWebinar = true"
-          >
-            Register for Webinar →
-          </button>
+      <div class="tutorial-page">
+        <div class="tutorial-header">
+          <h2>Video Tutorial</h2>
+          <p>Watch how to use the New Wage Code Calculator</p>
+        </div>
+
+        <div class="tutorial-grid">
+          <!-- LEFT -->
+          <div class="left-column">
+            <div class="video-player">
+              <div v-if="!isPlaying" class="video-thumb" @click="playVideo">
+                <button class="play-btn">▶</button>
+
+                <div class="video-info">
+                  <h4>How to use complymgmt.ai</h4>
+                  <p>Complete walkthrough · ~5 minutes</p>
+                </div>
+              </div>
+
+              <div v-else class="video-content">
+                <div class="video-icon">🎬</div>
+
+                <p>Video playing... (demo mode)</p>
+
+                <button class="stop-btn" @click="stopVideo">■ Stop</button>
+              </div>
+            </div>
+
+            <div class="upload-card">
+              <h3>Upload Your Tutorial Video</h3>
+
+              <p class="upload-subtitle">
+                Upload a custom walkthrough video for your team members.
+              </p>
+
+              <div class="upload-box">
+                <div class="upload-icon">📹</div>
+
+                <h4>Click to upload video</h4>
+
+                <p>MP4, MOV, AVI · Max 500MB</p>
+
+                <input
+                  ref="fileInput"
+                  type="file"
+                  accept="video/*"
+                  style="display: none"
+                  @change="handleVideoUpload"
+                />
+
+                <button class="upload-btn" @click="fileInput.click()">Choose Video File</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="right-column">
+            <div class="guide-card">
+              <h3>📚 Quick Reference Guide</h3>
+
+              <div class="guide-item">
+                <span class="step-box">1</span>
+                <div>
+                  <h4>Download Sample Template</h4>
+                  <p>Get the CSV template with correct column headers</p>
+                </div>
+              </div>
+
+              <div class="guide-item">
+                <span class="step-box">2</span>
+                <div>
+                  <h4>Fill in Employee Data</h4>
+                  <p>Add current salary components per employee</p>
+                </div>
+              </div>
+
+              <div class="guide-item">
+                <span class="step-box">3</span>
+                <div>
+                  <h4>Upload & Generate Report</h4>
+                  <p>Net Neutral is applied automatically</p>
+                </div>
+              </div>
+
+              <div class="guide-item no-border">
+                <span class="step-box">4</span>
+                <div>
+                  <h4>Download Results</h4>
+                  <p>Get compliant CSV + advisory report</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="legal-card">
+              <h3>⚖️ Key Legal Points</h3>
+
+              <p>
+                Section 2(y) Code on Wages: Excluded allowances cannot exceed 50% of total
+                remuneration.
+              </p>
+
+              <p>OSH Code Section 76: Earned leave accrual at 180 days in 5 notified states.</p>
+
+              <p>
+                Gratuity qualifying service remains 240 days across all states (PGA 1972 Section
+                2A).
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -561,6 +642,25 @@ import DashboardCards from '../components/dashboard/DashboardCards.vue'
 import UploadZone from '../components/dashboard/UploadZone.vue'
 import ResultsTable from '../components/dashboard/ResultsTable.vue'
 
+const isPlaying = ref(false)
+const fileInput = ref(null)
+
+const playVideo = () => {
+  isPlaying.value = true
+}
+
+const stopVideo = () => {
+  isPlaying.value = false
+}
+
+const handleVideoUpload = (event) => {
+  const file = event.target.files?.[0]
+
+  if (!file) return
+
+  appStore.showNotif(`📹 ${file.name} uploaded successfully`, 'success')
+}
+
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
   activeTab: {
@@ -790,6 +890,269 @@ function submitWebinar() {
 </script>
 
 <style scoped>
+.tutorial-page {
+  padding: 24px;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+.tutorial-header {
+  margin-bottom: 20px;
+}
+
+.tutorial-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.tutorial-header p {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.upload-card,
+.guide-card,
+.legal-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.video-player {
+  height: 420px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Thumbnail State */
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  background: linear-gradient(135deg, #0d1530 0%, #1b3a5c 50%, #2c4f78 100%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.play-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.video-info {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  color: white;
+}
+
+.video-info h4 {
+  font-family: 'Fraunces', serif;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.video-info p {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+}
+
+.video-content {
+  background: #000;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+}
+
+.video-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.stop-btn {
+  margin-top: 12px;
+  background: transparent;
+  color: white;
+  border: 1px solid #5b5b5b;
+  border-radius: 6px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+.upload-card {
+  padding: 20px;
+}
+
+.upload-card h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.upload-subtitle {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upload-box {
+  margin-top: 20px;
+  border: 1px dashed #d6d6d6;
+  border-radius: 12px;
+  padding: 45px 20px;
+  text-align: center;
+}
+
+.upload-icon {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.upload-box h4 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.upload-box p {
+  color: #64748b;
+  margin-top: 10px;
+}
+
+.upload-btn {
+  margin-top: 18px;
+  background: #163d6d;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.guide-card {
+  padding: 20px;
+}
+
+.guide-card h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.guide-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.guide-item h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.no-border {
+  border-bottom: none;
+}
+
+.step-box {
+  width: 22px;
+  height: 22px;
+  background: #4a90ff;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-item h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.guide-item p {
+  margin: 0;
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.legal-card {
+  background: #fff8e8;
+  border: 1px solid #e2bb63;
+  padding: 20px;
+}
+
+.legal-card h3 {
+  color: var(--ink);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.legal-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #5c4d2a;
+}
+
+element.style {
+  font-family: 'Fraunces', serif;
+}
+
+@media (max-width: 1024px) {
+  .tutorial-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .dash-main {
   flex: 1;
   padding: 36px 40px;
