@@ -6,7 +6,7 @@
       <div
         v-for="item in items"
         :key="item.key"
-        :class="['sidebar-item', { active: activeTab === item.key }]"
+        :class="['sidebar-item', { active: isActive(item) }]"
         @click="switchTab(item)"
       >
         <span class="sidebar-icon">{{ item.icon }}</span>
@@ -20,7 +20,7 @@
       <div
         v-for="item in accountItems"
         :key="item.key"
-        :class="['sidebar-item', { active: activeTab === item.key }]"
+        :class="['sidebar-item', { active: isActive(item) }]"
         @click="switchTab(item)"
       >
         <span class="sidebar-icon">{{ item.icon }}</span>
@@ -34,7 +34,7 @@
         <div
           v-for="item in adminItems"
           :key="item.key"
-          :class="['sidebar-item', { active: activeTab === item.key }]"
+          :class="['sidebar-item', { active: isActive(item) }]"
           @click="switchTab(item)"
         >
           <span class="sidebar-icon">
@@ -70,15 +70,24 @@
 import { computed } from 'vue'
 import { useAppStore } from 'src/stores/app'
 import { useAuthStore } from 'src/stores/auth'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-defineProps({
+const props = defineProps({
   activeTab: {
     type: String,
     default: 'calculator',
   },
 })
 const router = useRouter()
+const route = useRoute()
+
+const isActive = (item) => {
+  if (item.route) {
+    return route.path === item.route || route.path.startsWith(item.route + '/')
+  }
+
+  return props.activeTab === item.key
+}
 
 const emit = defineEmits(['tab-change'])
 // const userType = computed(() => auth.user?.type)
@@ -87,7 +96,7 @@ const app = useAppStore()
 const auth = useAuthStore()
 
 const switchTab = (item) => {
-  console.log('Clicked:', item)
+  // console.log('Clicked:', item)
 
   if (item.route) {
     router.push(item.route)
